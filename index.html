@@ -6,7 +6,7 @@
     <title>Exquisite Skills Training Academy | Integrity and Excellence</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght=300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin=""/>
 </head>
@@ -44,23 +44,26 @@
                 <span class="badge">Level 1 B-BBEE Contributor</span>
                 <h1>Empowering Minds With <span>Integrity & Excellence</span></h1>
                 <p>Exquisite Skills Training Academy is a dynamic corporate training and consulting company specializing in Human Capital Development (Administration & Management). We assist businesses with compliance and help implement National Skills Development Strategies.</p>
+                
                 <div class="hero-actions">
                     <a href="#programmes" class="btn-primary">Explore Programmes</a>
                     <a href="#about" class="btn-secondary">Learn More</a>
+                </div>
+
+                <div class="hero-stats-row">
+                    <div class="abstract-card">
+                        <h3 class="counter-val" data-target="100">0</h3>
+                        <p>% Black-Owned Consultancy</p>
+                    </div>
+                    <div class="abstract-card">
+                        <h3 class="counter-val" data-target="2009">0</h3>
+                        <p>Established Year</p>
+                    </div>
                 </div>
             </div>
             
             <div class="hero-visual-container">
                 <img src="class3.jpeg" alt="Exquisite Skills Academy Team and Inclusivity Overview" class="responsive-hero-img">
-                
-                <div class="abstract-card" style="display: none;">
-                    <h3 class="counter-val" data-target="100">0</h3>
-                    <p>% Black-Owned Consultancy</p>
-                </div>
-                <div class="abstract-card" style="display: none;">
-                    <h3 class="counter-val" data-target="2009">0</h3>
-                    <p>Established Year</p>
-                </div>
             </div>
         </div>
     </section>
@@ -378,7 +381,7 @@
                     </div>
                     <div class="campus-photo-wrapper">
                         <img src="class5.jpeg" alt="Academy Modern Training Room Infrastructure">
-                        <span class="campus-tag">Our main training campus is located within the premium, secure, and easily accessible Brooklyn Bridge Office Park in Pretoria East</span>
+                        <span class="campus-tag">Our main training campus is located within Brooklyn Bridge Office Park</span>
                     </div>
                     <div class="campus-photo-wrapper">
                         <img src="class3.jpeg" alt="Collaborative Study Area Environment">
@@ -425,19 +428,38 @@
     </footer>
 
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+    
     <script>
+        // 1. Mobile Responsive Menu Toggle
         function toggleMenu() {
             const navbar = document.getElementById('mainNavbar');
-            navbar.classList.toggle('responsive-nav-open');
+            if (navbar) {
+                navbar.classList.toggle('responsive-nav-open');
+            }
         }
 
+        // Close mobile navbar instantly when clicking a menu section link
+        document.addEventListener('DOMContentLoaded', () => {
+            const navbar = document.getElementById('mainNavbar');
+            const navLinks = document.querySelectorAll('#mainNavbar a');
+
+            navLinks.forEach(link => {
+                link.addEventListener('click', () => {
+                    if (navbar) {
+                        navbar.classList.remove('responsive-nav-open');
+                    }
+                });
+            });
+        });
+
+        // 2. Interactive Course Filter Search Engine
         function filterCourses() {
             const query = document.getElementById('courseSearch').value.toLowerCase();
             const cards = document.querySelectorAll('.course-card-element');
             
             cards.forEach(card => {
                 const searchData = card.getAttribute('data-name');
-                if (searchData.includes(query)) {
+                if (searchData && searchData.includes(query)) {
                     card.style.display = 'block';
                 } else {
                     card.style.display = 'none';
@@ -445,14 +467,15 @@
             });
         }
 
+        // 3. Strategic Counter Animations (Optimized fallback configuration)
         const counters = document.querySelectorAll('.counter-val');
         counters.forEach(counter => {
             const target = +counter.getAttribute('data-target');
-            const speed = target === 100 ? 15 : 1;
+            const speed = target > 500 ? 5 : 25; 
             
             const updateCount = () => {
                 const current = +counter.innerText;
-                const inc = Math.ceil(target / 50);
+                const inc = target > 500 ? Math.ceil(target / 120) : Math.ceil(target / 40);
                 
                 if(current < target) {
                     counter.innerText = current + inc > target ? target : current + inc;
@@ -464,6 +487,7 @@
             updateCount();
         });
 
+        // 4. Interactive Live Regional Footprint Map
         document.addEventListener("DOMContentLoaded", function() {
             const map = L.map('liveMap').setView([-25.6811, 28.2042], 5);
 
